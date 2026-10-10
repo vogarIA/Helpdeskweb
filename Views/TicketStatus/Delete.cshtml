@@ -1,0 +1,26 @@
+﻿@model HelpDeskWeb.Models.TicketStatus
+
+<h1>Borrar Ticket Status</h1>
+
+<h3>¿Seguro que quieres borrar este estado?</h3>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">Id</dt>
+        <dd class="col-sm-10">@Model.Id</dd>
+
+        <dt class="col-sm-2">Nombre</dt>
+        <dd class="col-sm-10">@Model.Name</dd>
+
+        <dt class="col-sm-2">Creado</dt>
+        <dd class="col-sm-10">@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</dd>
+
+        <dt class="col-sm-2">Actualizado</dt>
+        <dd class="col-sm-10">@Model.UpdatedAt.ToString("dd/MM/yyyy HH:mm")</dd>
+    </dl>
+
+    <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+        <input type="submit" value="Borrar" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Regresar</a>
+    </form>
+</div>

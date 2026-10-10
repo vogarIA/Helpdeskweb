@@ -1,0 +1,45 @@
+﻿@model List<HelpDeskWeb.Models.TicketStatus>
+
+@{
+    ViewData["Title"] = "Estados de ticket";
+}
+
+<h1>Estados de ticket</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crear nuevo</a>
+</p>
+
+@if (Model.Count == 0)
+{
+    <p class="text-muted">No hay estados registrados.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Creado</th>
+                <th>Actualizado</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>@item.UpdatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Editar</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Borrar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

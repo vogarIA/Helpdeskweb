@@ -1,0 +1,52 @@
+﻿@model List<HelpDeskWeb.Models.Ticket>
+
+@{
+    ViewData["Title"] = "Asignar prioridad";
+    var priorities = (List<HelpDeskWeb.Models.TicketPriority>)ViewBag.Priorities;
+}
+
+<h1>Asignar prioridad a tickets</h1>
+
+<p>
+    <a asp-action="Index" class="btn btn-secondary">Regresar</a>
+</p>
+
+@if (Model.Count == 0)
+{
+    <p class="text-muted">No hay tickets registrados.</p>
+}
+else
+{
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Título</th>
+                <th>Prioridad actual</th>
+                <th>Asignar prioridad</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Title</td>
+                    <td>@(item.TicketPriority?.Name ?? "Sin asignar")</td>
+                    <td>
+                        <form asp-action="AsignarPrioridad" asp-route-id="@item.Id" method="post" class="d-flex gap-2">
+                            <select name="priorityId" class="form-select form-select-sm w-auto">
+                                <option value="">Sin prioridad</option>
+                                @foreach (var p in priorities)
+                                {
+                                    <option value="@p.Id" selected="@(item.TicketPriorityId == p.Id)">@p.Name</option>
+                                }
+                            </select>
+                            <button type="submit" class="btn btn-sm btn-primary">Asignar prioridad</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

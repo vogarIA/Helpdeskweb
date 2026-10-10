@@ -18,7 +18,7 @@ namespace HelpDeskWeb.Services
             {
                 // Ensure the database is ready
                 logger.LogInformation("Ensuring the database is created.");
-                await context.Database.EnsureCreatedAsync();
+                //await context.Database.EnsureCreatedAsync();
 
                 // Add roles
                 logger.LogInformation("Seeding roles.");
