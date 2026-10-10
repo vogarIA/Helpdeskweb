@@ -22,6 +22,43 @@ namespace HelpDeskWeb.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("HelpDeskWeb.Models.Ticket", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<int?>("TicketPriorityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TicketPriorityId");
+
+                    b.ToTable("Ticket");
+                });
+
             modelBuilder.Entity("HelpDeskWeb.Models.TicketPriority", b =>
                 {
                     b.Property<int>("Id")
@@ -294,6 +331,16 @@ namespace HelpDeskWeb.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("HelpDeskWeb.Models.Ticket", b =>
+                {
+                    b.HasOne("HelpDeskWeb.Models.TicketPriority", "TicketPriority")
+                        .WithMany()
+                        .HasForeignKey("TicketPriorityId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("TicketPriority");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
