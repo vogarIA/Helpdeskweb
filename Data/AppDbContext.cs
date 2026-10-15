@@ -71,9 +71,39 @@ namespace HelpDeskWeb.Data
                 .HasDefaultValueSql("GETUTCDATE()");
 
             builder.Entity<Ticket>()
+                .HasOne(t => t.TicketStatus)
+                .WithMany()
+                .HasForeignKey(t => t.TicketStatusId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Ticket>()
                 .HasOne(t => t.TicketPriority)
                 .WithMany()
                 .HasForeignKey(t => t.TicketPriorityId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Ticket>()
+                .HasOne(t => t.CreatedBy)
+                .WithMany()
+                .HasForeignKey(t => t.CreatedById)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Ticket>()
+                .HasOne(t => t.AssignedTo)
+                .WithMany()
+                .HasForeignKey(t => t.AssignedToId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Ticket>()
+                .HasOne(t => t.ResolvedBy)
+                .WithMany()
+                .HasForeignKey(t => t.ResolvedById)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Ticket>()
+                .HasOne(t => t.ClosedBy)
+                .WithMany()
+                .HasForeignKey(t => t.ClosedById)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }
