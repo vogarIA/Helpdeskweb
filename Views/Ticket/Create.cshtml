@@ -1,0 +1,44 @@
+﻿@model HelpDeskWeb.Models.Ticket
+
+@{
+    ViewData["Title"] = "Crear ticket";
+}
+
+<h1>Crear ticket</h1>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">Título</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Descripción</label>
+        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="TicketPriorityId" class="form-label">Prioridad</label>
+        <select asp-for="TicketPriorityId" asp-items="(SelectList)ViewBag.Priorities" class="form-select">
+            <option value="">-- Sin prioridad --</option>
+        </select>
+        <span asp-validation-for="TicketPriorityId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DueDate" class="form-label">Fecha límite</label>
+        <input asp-for="DueDate" type="date" class="form-control" />
+        <span asp-validation-for="DueDate" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Crear</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
