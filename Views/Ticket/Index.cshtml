@@ -26,6 +26,7 @@ else
                 <th>Creado por</th>
                 <th>Creado</th>
                 <th>Fecha límite</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -39,6 +40,9 @@ else
                     <td>@(t.CreatedBy?.UserName ?? "—")</td>
                     <td>@t.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
                     <td>@(t.DueDate?.ToString("dd/MM/yyyy") ?? "—")</td>
+                    <td>
+                        <a asp-controller="Ticket" asp-action="Details" asp-route-id="@t.Id" class="btn btn-secondary btn-sm">Ver</a>
+                    </td>
                 </tr>
             }
         </tbody>

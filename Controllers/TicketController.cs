@@ -41,6 +41,30 @@ namespace HelpDeskWeb.Controllers
             return View(tickets);
         }
 
+        [Authorize(Roles = "Admin,User")]
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var ticket = await _appDbContext.Ticket
+                .AsNoTracking()
+                .Include(t => t.TicketStatus)
+                .Include(t => t.TicketPriority)
+                .Include(t => t.CreatedBy)
+                .Include(t => t.AssignedTo)
+                .Include(t => t.ResolvedBy)
+                .Include(t => t.ClosedBy)
+                .FirstOrDefaultAsync(t => t.Id == id);
+
+            if (ticket == null) return NotFound();
+
+            // Un usuario normal solo puede ver sus propios tickets
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!User.IsInRole("Admin") && ticket.CreatedById != userId)
+                return Forbid();
+
+            return View(ticket);
+        }
+
         [HttpGet]
         public async Task<IActionResult> Create()
         {

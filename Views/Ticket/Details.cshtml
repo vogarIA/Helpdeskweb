@@ -1,0 +1,42 @@
+﻿@model HelpDeskWeb.Models.Ticket
+
+@{
+    ViewData["Title"] = "Detalle de ticket";
+}
+
+<h1>Detalle de Ticket</h1>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Title (#@Model.Id)</h5>
+        <p class="card-text">@Model.Description</p>
+        <dl class="row">
+            <dt class="col-sm-3">Estado</dt>
+            <dd class="col-sm-9">@Model.TicketStatus?.Name</dd>
+
+            <dt class="col-sm-3">Prioridad</dt>
+            <dd class="col-sm-9">@Model.TicketPriority?.Name</dd>
+
+            <dt class="col-sm-3">Asignado a</dt>
+            <dd class="col-sm-9">@Model.AssignedTo?.UserName</dd>
+
+            <dt class="col-sm-3">Creado por</dt>
+            <dd class="col-sm-9">@Model.CreatedBy?.UserName</dd>
+
+            <dt class="col-sm-3">Creado</dt>
+            <dd class="col-sm-9">@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</dd>
+
+            <dt class="col-sm-3">Due Date</dt>
+            <dd class="col-sm-9">@Model.DueDate?.ToString("dd/MM/yyyy")</dd>
+
+            <dt class="col-sm-3">Resuelto por</dt>
+            <dd class="col-sm-9">@Model.ResolvedBy?.UserName</dd>
+
+            <dt class="col-sm-3">Cerrado por</dt>
+            <dd class="col-sm-9">@Model.ClosedBy?.UserName</dd>
+        </dl>
+
+        <a asp-controller="Ticket" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a>
+        <a asp-controller="Ticket" asp-action="Index" class="btn btn-secondary">Regresar</a>
+    </div>
+</div>
