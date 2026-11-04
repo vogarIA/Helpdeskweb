@@ -29,6 +29,18 @@ namespace HelpDeskWeb.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var ticketPriority = await _appDbContext.TicketPriority
+                .AsNoTracking()
+                .FirstOrDefaultAsync(tp => tp.Id == id);
+
+            if (ticketPriority == null) return NotFound();
+
+            return View(ticketPriority);
+        }
+
+        [HttpGet]
         public IActionResult Create()
         {
             return View();

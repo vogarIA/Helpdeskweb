@@ -36,7 +36,11 @@
             <dd class="col-sm-9">@Model.ClosedBy?.UserName</dd>
         </dl>
 
-        <a asp-controller="Ticket" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a>
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-controller="Ticket" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a>
+            <a asp-controller="Ticket" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Borrar</a>
+        }
         <a asp-controller="Ticket" asp-action="Index" class="btn btn-secondary">Regresar</a>
     </div>
 </div>

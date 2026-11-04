@@ -1,0 +1,34 @@
+﻿@model HelpDeskWeb.Models.Ticket
+
+@{
+    ViewData["Title"] = "Borrar ticket";
+}
+
+<h1>Borrar ticket</h1>
+
+<h3 class="text-danger">¿Seguro que quieres borrar este ticket?</h3>
+
+<dl class="row">
+    <dt class="col-sm-2">Id</dt>
+    <dd class="col-sm-10">@Model.Id</dd>
+
+    <dt class="col-sm-2">Título</dt>
+    <dd class="col-sm-10">@Model.Title</dd>
+
+    <dt class="col-sm-2">Estado</dt>
+    <dd class="col-sm-10">@(Model.TicketStatus?.Name ?? "—")</dd>
+
+    <dt class="col-sm-2">Prioridad</dt>
+    <dd class="col-sm-10">@(Model.TicketPriority?.Name ?? "Sin prioridad")</dd>
+
+    <dt class="col-sm-2">Creado por</dt>
+    <dd class="col-sm-10">@(Model.CreatedBy?.UserName ?? "—")</dd>
+
+    <dt class="col-sm-2">Creado</dt>
+    <dd class="col-sm-10">@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</dd>
+</dl>
+
+<form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+    <input type="submit" value="Borrar" class="btn btn-danger" />
+    <a asp-action="Index" class="btn btn-secondary">Regresar</a>
+</form>
