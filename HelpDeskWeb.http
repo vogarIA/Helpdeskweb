@@ -1,0 +1,43 @@
+@host = https://localhost:7220
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJIZWxwRGVza1dlYkNsaWVudGVzIiwiaXNzIjoiSGVscERlc2tXZWIiLCJleHAiOjE3OTQ0NDE5OTIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiY2Q2ZjA0NzgtZmQzNC00Zjg2LTg3OTYtNTQ3ZDU4NDkzNGZmIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluQGVtcHJlc2EuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiYWRtaW5AZW1wcmVzYS5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImlhdCI6MTc5NDQzODM5MiwibmJmIjoxNzk0NDM4MzkyfQ.7qYOSPumVi0guyN6CLIyf4-nNVdeV1AU9ZQzNXUrb8w
+
+### 1. Login (genera el token)
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@empresa.com",
+  "password": "Admin-123456789"
+}
+
+### 2. Login con contraseña incorrecta (debe dar 401)
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@empresa.com",
+  "password": "incorrecta"
+}
+
+### 3. Agregar un ticket
+POST {{host}}/api/tickets
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "Ticket creado desde el servicio web",
+  "description": "Prueba del endpoint POST",
+  "ticketPriorityId": 3,
+  "dueDate": "2026-11-20"
+}
+
+### 4. Consultar todos los tickets
+GET {{host}}/api/tickets
+Authorization: Bearer {{token}}
+
+### 5. Consultar un ticket por id
+GET {{host}}/api/tickets/1
+Authorization: Bearer {{token}}
+
+### 6. Consultar sin token (debe dar 401)
+GET {{host}}/api/tickets

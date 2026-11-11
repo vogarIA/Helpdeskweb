@@ -118,6 +118,14 @@ namespace HelpDeskWeb.Controllers
             var ticketPriority = await _appDbContext.TicketPriority.FindAsync(id);
             if (ticketPriority == null) return NotFound();
 
+            // Restrict: no se puede borrar una prioridad que algún ticket esté usando
+            if (await _appDbContext.Ticket.AnyAsync(t => t.TicketPriorityId == id))
+            {
+                ModelState.AddModelError(string.Empty,
+                    "No se puede borrar esta prioridad porque hay tickets que la están usando.");
+                return View("Delete", ticketPriority);
+            }
+
             _appDbContext.TicketPriority.Remove(ticketPriority);
             await _appDbContext.SaveChangesAsync();
 
